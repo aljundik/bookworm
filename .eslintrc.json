@@ -1,5 +1,6 @@
 {
     "extends": "airbnb",
+    "parser": "babel-eslint",
     "rules": {
            "strict": 2,
            "quotes": 2,
@@ -8,7 +9,8 @@
            "no-underscore-dangle": 2,
            "comma-dangle": ["error", "always"],
           "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "jsx-a11y/anchor-is-valid": [ "error", { "components": [ "Link" ], "specialLink": [ "to" ] } ]          
+    "jsx-a11y/anchor-is-valid": [ "error", { "components": [ "Link" ], "specialLink": [ "to" ] } ],
+    "jsx-a11y/label-has-for": [ 2, [ "Label", "InputDescriptor" ] ]          
         } ,
 
         "env": {
