@@ -1,10 +1,10 @@
 import React from 'react';
-import { Form, Button, } from 'semantic-ui-react';
+import { Form, Button, Message, } from 'semantic-ui-react';
 import Validator from 'validator';
 import PropTypes from 'prop-types';
 
 import InlineValidate from './InlineValidate/InlineValidate';
-
+// set up the loading component from semantic library
 
 class LoginForm extends React.Component {
     state = {
@@ -26,9 +26,12 @@ class LoginForm extends React.Component {
     onSubmit = () => {
       const errors = this.validate(this.state.data);
       this.setState({ errors, });
-      this.props.submit(this.state.data);
-      if (!Object.keys(errors)) {
-        this.props.submit(this.state.data);
+      if (Object.keys(errors).length === 0) {
+        this.setState({ loading: true, });
+        this.props
+          .submit(this.state.data)
+          .catch(err =>
+            this.setState({ errors: err.response.data.errors, loading: false, }));
       }
     };
 
@@ -45,6 +48,10 @@ class LoginForm extends React.Component {
       const { data, errors, } = this.state;
       return (
         <Form onSubmit={this.onSubmit}>
+          {errors.global &&
+          <Message negative>
+            <Message.Header>Somthing Went Wrong</Message.Header>
+          </Message>}
           <Form.Field error={!!errors.email}>
             <label htmlFor="email"> Email
               <input
