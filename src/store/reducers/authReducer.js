@@ -3,7 +3,10 @@ import * as actions from '../actions';
 
 const initState = {
   test: '',
-  actionType: '',
+  user: {
+    email: '',
+    token: '',
+  },
 };
 
 
@@ -12,7 +15,11 @@ const authReducer = (state = initState, action) => {
     case (actions.LOGGED_IN):
       return {
         ...state,
-        actionType: action.type,
+        user: action.payroll,
+      };
+    case (actions.LOGGED_OUT):
+      return {
+        ...state,
       };
     default: return state;
   }

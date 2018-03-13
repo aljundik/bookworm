@@ -1,9 +1,16 @@
 import api from '../../api/api';
-import { LOGGED_IN, } from './index';
+import { LOGGED_IN, LOGGED_OUT, } from './index';
 
-const userLoggedIn = data => ({
-  type: LOGGED_IN,
-  payrol: data,
+const userLoggedIn = (user) => {
+  console.log('user', user);
+  return {
+    type: LOGGED_IN,
+    payroll: user,
+  };
+};
+
+const userLogout = () => ({
+  type: LOGGED_OUT,
 });
 
 
@@ -12,6 +19,15 @@ const userLoggedIn = data => ({
 
 
 const login = credentials => dispatch =>
-  api.user.login(credentials).then(user => dispatch(userLoggedIn(user)));
+  api.user.login(credentials).then((user) => {
+    localStorage.bookwormJWT = user.token;
+    dispatch(userLoggedIn(user));
+  });
 
-export { login, };// eslint-disable-line
+
+const logout = () => (dispatch) => {
+  localStorage.removeItem('bookwormJWT');
+  dispatch(userLogout());
+};
+
+export { login, userLoggedIn, logout };// eslint-disable-line
